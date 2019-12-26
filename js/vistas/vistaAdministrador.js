@@ -34,7 +34,8 @@ VistaAdministrador.prototype = {
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
     interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function(resp){
-      return " " + resp.textoRespuesta;
+      console.log("resp", resp);
+      return " " + resp.respuesta;
     }));
     nuevoItem.html($('.d-flex').html());
     return nuevoItem;
@@ -61,6 +62,7 @@ VistaAdministrador.prototype = {
       $('[name="option[]"]').each(function() {
         if ($(this).val() != false) {
           let respuestaObj = { respuesta: $(this).val(), cantidad: 0 };
+          console.log("respuestaObj",respuestaObj);//aca va bien
           respuestas.push(respuestaObj);
       }
       })
@@ -73,7 +75,12 @@ VistaAdministrador.prototype = {
       let id= parseInt($('.list-group-item.active').attr('id'));
       console.log('entre al borrar', id);
       contexto.controlador.borrarPregunta(id);
-    })
+    });
+    e.botonEditarPregunta.click(function(){
+      let id= parseInt($('.list-group-item.active').attr('id'));
+      let editada= prompt("Re escriba la pregunta: ");
+      contexto.controlador.editarPregunta (id, editada);
+    });
   },
 
   limpiarFormulario: function(){

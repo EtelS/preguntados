@@ -8,6 +8,7 @@ var Modelo = function() {
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
+  this.preguntaEditada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -21,6 +22,7 @@ Modelo.prototype = {
 
   //se agrega una pregunta dado un nombre y sus respuestas
   agregarPregunta: function(nombre, respuestas) {
+    console.log("agregar Pregunta", respuestas);
     var id = this.obtenerUltimoId();
     id++;
     console.log('agregar pregunta', id);
@@ -41,10 +43,32 @@ Modelo.prototype = {
     };
     this.guardar();
     this.preguntaEliminada.notificar();
+  },
+  votar: function(pregunta, respuesta){
+    this.preguntas.forEach(function(preguntaActual){
+      if (preguntaActual.textoPregunta===pregunta){
+        preguntaActual.cantidadPorRespuesta.forEach(function(respuestaObj){
+          if (respuestaObj.respuesta===respuesta){
+            respuestaObj.cantidad++;
+          }
+        });
+      }
+    });
+  },
+
+  editarPregunta:function(pregunta, editada){
+    this.preguntas.forEach(function(element){
+      if (element.id===pregunta){
+        element.textoPregunta=editada;
+      }
+    });
+    this.guardar();
+    this.preguntaEditada.notificar();
 
   },
 
   //se guardan las preguntas
   guardar: function(){
+    // aca va el local storage
   },
 };
