@@ -9,6 +9,7 @@ var Modelo = function() {
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
   this.preguntaEditada = new Evento(this);
+  this.borrarTodo1 = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -56,15 +57,24 @@ Modelo.prototype = {
     });
   },
 
-  editarPregunta:function(pregunta, editada){
+  editarPregunta: function(id, editada){
     this.preguntas.forEach(function(element){
-      if (element.id===pregunta){
+      if (element.id===id){
+        console.log(element.id,"element.id en modelo.js");
+        console.log(id,"id");
+        console.log(editada, "editada");
         element.textoPregunta=editada;
       }
     });
     this.guardar();
     this.preguntaEditada.notificar();
+    console.log(this.preguntas,"this.preguntas");
 
+  },
+
+   borrarTodo1: function(id){
+     console.log('borrar ', id);
+   /* this.preguntas=[];*/
   },
 
   //se guardan las preguntas
