@@ -17,7 +17,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaEditada.suscribir(function(){
     contexto.reconstruirLista();
   });
-  this.modelo.borrarTodo1.suscribir(function(){
+  this.modelo.preguntaBorrarTodo.suscribir(function(){
     contexto.reconstruirLista();
   });
 };
@@ -95,7 +95,7 @@ VistaAdministrador.prototype = {
         }
     });
     e.borrarTodo.click(function(){
-      contexto.controlador.borrarTodo1();
+      contexto.controlador.borrarTodasLasPreguntas();
     })
   },
 

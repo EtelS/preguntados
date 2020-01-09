@@ -15,8 +15,8 @@ Controlador.prototype = {
   editarPregunta: function(id, editada){
     this.modelo.editarPregunta(id, editada);
   },
-  borrarTodo1: function(){
+  borrarTodasLasPreguntas: function(){
     //console.log(id)
-    this.modelo.borrarTodo1();
+    this.modelo.borrarTodasLasPreguntas();
   },
 };

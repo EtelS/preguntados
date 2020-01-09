@@ -9,7 +9,7 @@ var Modelo = function() {
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
   this.preguntaEditada = new Evento(this);
-  this.borrarTodo1 = new Evento(this);
+  this.preguntaBorrarTodo = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -72,8 +72,9 @@ Modelo.prototype = {
 
   },
 
-   borrarTodo1: function(id){
+  borrarTodasLasPreguntas: function(id){
      console.log('borrar ', id);
+     this.preguntaBorrarTodo.notificar()
    /* this.preguntas=[];*/
   },
 
