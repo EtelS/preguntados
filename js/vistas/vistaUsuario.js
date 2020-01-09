@@ -8,9 +8,14 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   var contexto = this;
 
   //suscripcion a eventos del modelo
+
+  // aca se suscribe a todos los eventos de administrador que el usuario tiene que ver
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
-  });
+  },
+  this.modelo.sumarVotoRespuesta.suscribir(function(){
+    contexto.reconstruirGrafico();
+  }));
 };
 
 VistaUsuario.prototype = {
@@ -51,6 +56,10 @@ VistaUsuario.prototype = {
     preguntas.forEach(function(clave){
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
+      listaPreguntas.append( $('<div>',{
+        value: clave.textoPregunta,
+        text: clave.textoPregunta,
+        id: clave.id }));
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
     })

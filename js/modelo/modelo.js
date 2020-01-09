@@ -10,6 +10,7 @@ var Modelo = function() {
   this.preguntaEliminada = new Evento(this);
   this.preguntaEditada = new Evento(this);
   this.preguntaBorrarTodo = new Evento(this);
+  this.sumarVotoRespuesta = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -45,6 +46,7 @@ Modelo.prototype = {
     this.guardar();
     this.preguntaEliminada.notificar();
   },
+
   votar: function(pregunta, respuesta){
     this.preguntas.forEach(function(preguntaActual){
       if (preguntaActual.textoPregunta===pregunta){
@@ -73,13 +75,18 @@ Modelo.prototype = {
   },
 
   borrarTodasLasPreguntas: function(id){
-     console.log('borrar ', id);
+     this.preguntas=[];
      this.preguntaBorrarTodo.notificar()
-   /* this.preguntas=[];*/
+    
+  },
+  guardar: function(){
+    localStorage.setItem("preguntas", JSON.stringify(this.preguntas));
   },
 
-  //se guardan las preguntas
-  guardar: function(){
-    // aca va el local storage
-  },
+  cargarPreguntas: function(){ // hay que inicializarlo en la vista administrador asi se cargan las preguntas guardadas
+    var preguntasGuardadas = JSON.parse(localStorage.getItem("preguntas"));
+    if (preguntasGuardadas !== null){
+      this.preguntas = preguntasGuardadas;
+    }
+  }
 };
