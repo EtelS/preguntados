@@ -35,29 +35,29 @@ Modelo.prototype = {
   },
 
   borrarPregunta: function(id){
-    var idBorrar= this.preguntas.find(fruta => fruta.id ===id); //busco la pregunta que voy a borrar y lo guardo en la variable
-    console.log('idBorrar :',idBorrar);
-    console.log('arreglor de preguntas: ',modelo.preguntas);
-    var indiceBorrar= this.preguntas.indexOf(idBorrar); //busco la posicion en la matriz y la guardo
-    console.log('indiceBorrar: ',indiceBorrar)
-        if  (indiceBorrar != undefined){ //me fijo que realmente el id sea valido
-                modelo.preguntas.splice(indiceBorrar,1);
-    };
+    var idBorrar= this.preguntas.map(pregunta => pregunta.id).indexOf(id); //busco el id la pregunta que voy a borrar y lo guardo en la variable
+    this.preguntas.splice(idBorrar, 1);
     this.guardar();
     this.preguntaEliminada.notificar();
   },
-
+  
+  
   votar: function(pregunta, respuesta){
-    this.preguntas.forEach(function(preguntaActual){
-      if (preguntaActual.textoPregunta===pregunta){
-        preguntaActual.cantidadPorRespuesta.forEach(function(respuestaObj){
-          if (respuestaObj.respuesta===respuesta){
-            respuestaObj.cantidad++;
-          }
-        });
-      }
-    });
-  },
+
+    if(respuesta!==undefined){
+      const preguntaEncontrada = this.preguntas.find(Element => Element.textoPregunta === pregunta);
+      // console.log(preguntaEncontrada)
+      var index = this.preguntas.indexOf(preguntaEncontrada);
+      if (index > -1) {
+        const respuestaEncontrada = this.preguntas[index].cantidadPorRespuesta.find(Element => Element.textoRespuesta === respuesta);
+  
+        // console.log(respuestaEncontrada)
+        respuestaEncontrada.cantidad++;
+    this.sumarVotoRespuesta.notificar();
+    this.guardar;
+                   }
+                                        }
+                                        },
 
   editarPregunta: function(id, editada){
     this.preguntas.forEach(function(element){
@@ -74,9 +74,10 @@ Modelo.prototype = {
 
   },
 
-  borrarTodasLasPreguntas: function(id){
+  borrarTodasLasPreguntas: function(){
      this.preguntas=[];
-     this.preguntaBorrarTodo.notificar()
+     this.guardar();// llamando a esta funcion aca no se vuelve a mostrar las preguntas de usuario a admin que quedaban en local storage
+     this.preguntaBorrarTodo.notificar();
     
   },
   guardar: function(){

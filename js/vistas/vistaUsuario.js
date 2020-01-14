@@ -12,10 +12,20 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   // aca se suscribe a todos los eventos de administrador que el usuario tiene que ver
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
-  },
+  }),
   this.modelo.sumarVotoRespuesta.suscribir(function(){
     contexto.reconstruirGrafico();
-  }));
+  }),
+  this.modelo.preguntaEliminada.suscribir(function(){
+    contexto.reconstruirLista();
+  }),
+  this.modelo.preguntaEditada.suscribir(function(){
+    contexto.reconstruirLista();
+  }),
+  this.modelo.preguntaBorrarTodo.suscribir(function(){
+    contexto.reconstruirLista();
+  });
+  
 };
 
 VistaUsuario.prototype = {
@@ -56,10 +66,11 @@ VistaUsuario.prototype = {
     preguntas.forEach(function(clave){
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
-      listaPreguntas.append( $('<div>',{
+      listaPreguntas.append($('<div>',{
         value: clave.textoPregunta,
         text: clave.textoPregunta,
-        id: clave.id }));
+        id: clave.id,
+       }));
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
     })

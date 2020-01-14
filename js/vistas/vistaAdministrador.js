@@ -42,7 +42,7 @@ VistaAdministrador.prototype = {
     titulo.text(pregunta.textoPregunta);
     interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function(resp){
       console.log("resp", resp);
-      return " " + resp.respuesta;
+      return " " + resp.textoRespuesta;
     }));
     nuevoItem.html($('.d-flex').html());
     return nuevoItem;
@@ -67,21 +67,26 @@ VistaAdministrador.prototype = {
       var respuestas = [];
 
       $('[name="option[]"]').each(function() {
-        if ($(this).val() != false) {
-          let respuestaObj = { respuesta: $(this).val(), cantidad: 0 };
-          console.log("respuestaObj",respuestaObj);//aca va bien
-          respuestas.push(respuestaObj);
-      }
+          respuesta= $(this).val();
+          respuestas.push({
+            'textoRespuesta': respuesta,
+             'cantidad': 0
+          });
+          console.log("respuestas agregar pregunta", respuestas);
+
       })
+      respuestas.pop();//elimina el ultimo undefined
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
     });
+
     //asociar el resto de los botones a eventos
     e.botonBorrarPregunta.click(function(){
       console.log ($('.list-group-item.active').attr('id'));
       let id= parseInt($('.list-group-item.active').attr('id'));
-      console.log('entre al borrar', id);
-      contexto.controlador.borrarPregunta(id);
+      if (id){// si el id es valido entonces borra la pregunta
+      contexto.controlador.borrarPregunta(id); 
+    }
     });
     e.botonEditarPregunta.click(function(){
       let id= parseInt($('.list-group-item.active').attr('id'));
